@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Trailer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+background:#000;
+font-family:'Noto Serif JP', serif;
+overflow:hidden;
+}
+
+.container{
+position:relative;
+height:100vh;
+width:100vw;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:white;
+text-align:center;
+padding:30px;
+box-sizing:border-box;
+}
+
+.bg{
+position:absolute;
+width:110%;
+height:110%;
+background:url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da") center/cover;
+filter:blur(8px) brightness(0.45);
+z-index:-1;
+animation:zoom 20s infinite alternate;
+}
+
+@keyframes zoom{
+from{transform:scale(1);}
+to{transform:scale(1.1);}
+}
+
+.text{
+max-width:700px;
+font-size:28px;
+line-height:1.8;
+opacity:0;
+transform:translateY(40px);
+transition:all 1.5s ease;
+margin-bottom:40px;
+}
+
+.text.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.small{
+font-size:18px;
+opacity:0.8;
+margin-bottom:20px;
+letter-spacing:2px;
+}
+
+.big{
+font-size:38px;
+font-weight:700;
+margin:20px 0;
+}
+
+.quote{
+font-size:22px;
+font-style:italic;
+opacity:0.9;
+}
+
+.title{
+font-size:46px;
+font-weight:700;
+letter-spacing:6px;
+margin-top:20px;
+}
+
+.author{
+font-size:16px;
+opacity:0.7;
+margin-top:10px;
+}
+
+/* ボタン */
+
+.button{
+padding:14px 28px;
+background:white;
+color:black;
+font-size:16px;
+border-radius:40px;
+text-decoration:none;
+font-weight:700;
+letter-spacing:1px;
+transition:all .3s;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+.button:hover{
+transform:scale(1.05);
+background:#f5f5f5;
+}
+
+@media(max-width:600px){
+
+.text{
+font-size:20px;
+}
+
+.big{
+font-size:28px;
+}
+
+.quote{
+font-size:18px;
+}
+
+.title{
+font-size:34px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="bg"></div>
+
+<div id="text" class="text"></div>
+
+<a class="button" href="https://あなたのNotion記事URL" target="_blank">
+感想記事を読む
+</a>
+
+</div>
+
+<script>
+
+const scenes=[
+
+`<div class="small">ある日常エッセイ</div>
+<div class="big">こんなに笑ったのは、初めてかもしれない。</div>`,
+
+`日常は、退屈なものだと思っていた。<br><br>
+でも、くどうれいんの手にかかると<br>
+それは突然、舞台のように輝き出す。`,
+
+`<div class="quote">
+彼氏との別れ話の場所として連れて行かれたのはなぜか九段下だった。<br><br>
+TPOがおしまい、TPOよ、ああ、TPO
+</div>`,
+
+`登場するのは<br><br>
+友人<br>
+家族<br>
+街で出会った人たち`,
+
+`でも彼らは、なぜか<br><br>
+とんでもなく面白い。`,
+
+`<div class="big">TPOおしまい男</div>`,
+
+`<div class="big">底抜けにタフ（アホ）なハシノ</div>`,
+
+`くどうれいんの<br>
+鋭い観察力と<br>
+言葉のセンスが<br><br>
+日常をコメディに変えていく。`,
+
+`<div class="big">人って、やっぱりおもしろい。</div>`,
+
+`<div class="title">うたうおばけ</div>
+<div class="author">くどうれいん</div>`
+
+];
+
+let index=0;
+const text=document.getElementById("text");
+
+function showScene(){
+
+text.classList.remove("show");
+
+setTimeout(()=>{
+
+text.innerHTML=scenes[index];
+text.classList.add("show");
+
+index++;
+
+if(index>=scenes.length){
+index=0;
+}
+
+},800);
+
+}
+
+showScene();
+
+setInterval(showScene,4500);
+
+</script>
+
+</body>
+</html>
