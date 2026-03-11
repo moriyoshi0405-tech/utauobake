@@ -10,59 +10,42 @@
 
 body{
 margin:0;
+background:transparent;
 font-family:'Zen Kaku Gothic New',sans-serif;
-background:#fafafa;
-overflow:hidden;
-}
-
-.container{
-position:relative;
-height:100vh;
 display:flex;
-align-items:center;
 justify-content:center;
-text-align:center;
-padding:30px;
+align-items:center;
 }
 
-/* 背景 */
-
-.bg{
-position:absolute;
-width:110%;
-height:110%;
-background:url("https://images.unsplash.com/photo-1495446815901-a7297e633e8d") center/cover;
-filter:blur(10px) brightness(1.05);
-z-index:-1;
-animation:zoom 25s infinite alternate;
-}
-
-@keyframes zoom{
-from{transform:scale(1);}
-to{transform:scale(1.1);}
-}
-
-/* SNSカード */
+/* リールカード */
 
 .card{
 
-background:rgba(255,255,255,0.85);
-backdrop-filter:blur(20px);
-padding:40px;
-border-radius:20px;
-max-width:520px;
-box-shadow:0 20px 60px rgba(0,0,0,0.15);
+width:320px;
+height:480px;
+background:white;
+border-radius:18px;
+box-shadow:0 10px 30px rgba(0,0,0,0.12);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:30px;
+box-sizing:border-box;
 
 }
 
 /* テキスト */
 
 .text{
-font-size:28px;
-line-height:1.7;
+
+font-size:20px;
+line-height:1.6;
 opacity:0;
-transform:translateY(20px);
-transition:all 1s;
+transform:translateY(10px);
+transition:.8s;
+
 }
 
 .text.show{
@@ -71,74 +54,55 @@ transform:translateY(0);
 }
 
 .big{
-font-size:34px;
+font-size:24px;
 font-weight:700;
 }
 
 .quote{
 font-style:italic;
-font-size:22px;
+font-size:18px;
 }
 
 /* 書影 */
 
 .book{
-margin-top:25px;
-opacity:0;
-transform:scale(.85);
-transition:all 1.5s;
-}
 
-.book.show{
-opacity:1;
-transform:scale(1);
+display:none;
+flex-direction:column;
+align-items:center;
+
 }
 
 .book img{
-width:180px;
-border-radius:8px;
-box-shadow:0 20px 50px rgba(0,0,0,0.25);
+
+width:140px;
+border-radius:6px;
+box-shadow:0 12px 30px rgba(0,0,0,0.2);
+
 }
 
-/* タイトル */
-
 .title{
-margin-top:12px;
+margin-top:10px;
 font-weight:700;
-font-size:24px;
 }
 
 .author{
-font-size:15px;
-opacity:.7;
+font-size:13px;
+opacity:.6;
 }
 
 /* ボタン */
 
 .button{
 
-display:inline-block;
-margin-top:20px;
-padding:12px 24px;
-border-radius:30px;
+margin-top:12px;
+padding:10px 18px;
+border-radius:20px;
 background:black;
 color:white;
 text-decoration:none;
-font-size:14px;
+font-size:13px;
 font-weight:700;
-transition:.3s;
-
-}
-
-.button:hover{
-transform:scale(1.05);
-background:#333;
-}
-
-@media(max-width:600px){
-
-.text{font-size:22px}
-.big{font-size:26px}
 
 }
 
@@ -147,25 +111,20 @@ background:#333;
 
 <body>
 
-<div class="container">
-
-<div class="bg"></div>
-
 <div class="card">
 
 <div id="text" class="text"></div>
 
 <div id="book" class="book">
+
 <img src="https://m.media-amazon.com/images/I/615m1SL9wIL._SL1428_.jpg">
 
 <div class="title">うたうおばけ</div>
 <div class="author">くどうれいん</div>
 
 <a class="button" href="https://aged-trouser-c00.notion.site/305f89d90a6380b48cc0d354d6b04ae3" target="_blank">
-感想記事を読む
+感想記事
 </a>
-
-</div>
 
 </div>
 
@@ -175,24 +134,17 @@ background:#333;
 
 const scenes=[
 
-`<div class="big">こんなに笑ったエッセイ、初めてかもしれない。</div>`,
+`<div class="big">こんなに笑った<br>エッセイ初めて</div>`,
 
-`日常は退屈だと思っていた。<br><br>
-でもある人の視点を通すと<br>
-それは突然、舞台になる。`,
+`日常は<br>退屈だと思っていた`,
 
-`<div class="quote">
-TPOがおしまい、TPOよ、ああ、TPO
-</div>`,
+`<div class="quote">TPOがおしまい</div>`,
 
-`TPOおしまい男。`,
+`TPOおしまい男`,
 
-`底抜けにタフなハシノ。`,
+`底抜けにタフな<br>ハシノ`,
 
-`くどうれいんの言葉は<br><br>
-日常をコメディに変える。`,
-
-`<div class="big">人って、やっぱりおもしろい。</div>`
+`<div class="big">人って<br>やっぱりおもしろい</div>`
 
 ]
 
@@ -202,30 +154,34 @@ const book=document.getElementById("book")
 
 function showScene(){
 
+if(index < scenes.length){
+
+book.style.display="none"
+text.style.display="block"
+
 text.classList.remove("show")
 
 setTimeout(()=>{
 
-if(index < scenes.length){
-
 text.innerHTML=scenes[index]
 text.classList.add("show")
+
 index++
+
+},200)
 
 }else{
 
-text.innerHTML=""
-book.classList.add("show")
+text.style.display="none"
+book.style.display="flex"
 
 }
-
-},400)
 
 }
 
 showScene()
 
-setInterval(showScene,3500)
+setInterval(showScene,3000)
 
 </script>
 
