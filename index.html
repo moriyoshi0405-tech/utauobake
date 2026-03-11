@@ -1,3 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:'Zen Kaku Gothic New',sans-serif;
+background:#fafafa;
+overflow:hidden;
+}
+
+.container{
+position:relative;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:30px;
+}
+
+/* 背景 */
+
+.bg{
+position:absolute;
+width:110%;
+height:110%;
+background:url("https://images.unsplash.com/photo-1495446815901-a7297e633e8d") center/cover;
+filter:blur(10px) brightness(1.05);
+z-index:-1;
+animation:zoom 25s infinite alternate;
+}
+
+@keyframes zoom{
+from{transform:scale(1);}
+to{transform:scale(1.1);}
+}
+
+/* SNSカード */
+
+.card{
+
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(20px);
+padding:40px;
+border-radius:20px;
+max-width:520px;
+box-shadow:0 20px 60px rgba(0,0,0,0.15);
+
+}
+
+/* テキスト */
+
+.text{
+font-size:28px;
+line-height:1.7;
+opacity:0;
+transform:translateY(20px);
+transition:all 1s;
+}
+
+.text.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.big{
+font-size:34px;
+font-weight:700;
+}
+
+.quote{
+font-style:italic;
+font-size:22px;
+}
+
+/* 書影 */
+
+.book{
+margin-top:25px;
+opacity:0;
+transform:scale(.85);
+transition:all 1.5s;
+}
+
+.book.show{
+opacity:1;
+transform:scale(1);
+}
+
+.book img{
+width:180px;
+border-radius:8px;
+box-shadow:0 20px 50px rgba(0,0,0,0.25);
+}
+
+/* タイトル */
+
+.title{
+margin-top:12px;
+font-weight:700;
+font-size:24px;
+}
+
+.author{
+font-size:15px;
+opacity:.7;
+}
+
+/* ボタン */
+
+.button{
+
+display:inline-block;
+margin-top:20px;
+padding:12px 24px;
+border-radius:30px;
+background:black;
+color:white;
+text-decoration:none;
+font-size:14px;
+font-weight:700;
+transition:.3s;
+
+}
+
+.button:hover{
+transform:scale(1.05);
+background:#333;
+}
+
+@media(max-width:600px){
+
+.text{font-size:22px}
+.big{font-size:26px}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="bg"></div>
+
+<div class="card">
+
+<div id="text" class="text"></div>
+
+<div id="book" class="book">
+<img src="https://m.media-amazon.com/images/I/615m1SL9wIL._SL1428_.jpg">
+
+<div class="title">うたうおばけ</div>
+<div class="author">くどうれいん</div>
+
+<a class="button" href="https://aged-trouser-c00.notion.site/305f89d90a6380b48cc0d354d6b04ae3" target="_blank">
+感想記事を読む
+</a>
+
+</div>
+
+</div>
+
+</div>
+
 <script>
 
 const scenes=[
@@ -55,3 +228,6 @@ showScene()
 setInterval(showScene,3500)
 
 </script>
+
+</body>
+</html>
