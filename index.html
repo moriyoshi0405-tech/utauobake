@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book Trailer</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
 
@@ -11,38 +10,41 @@
 
 body{
 margin:0;
-background:#000;
-font-family:'Noto Serif JP', serif;
+font-family:'Noto Serif JP',serif;
 overflow:hidden;
+background:#f5efe6;
 }
 
 .container{
-position:relative;
 height:100vh;
 width:100vw;
 display:flex;
 flex-direction:column;
-justify-content:center;
 align-items:center;
-color:white;
+justify-content:center;
 text-align:center;
-padding:30px;
+padding:40px;
 box-sizing:border-box;
+position:relative;
 }
+
+/* 背景 */
 
 .bg{
 position:absolute;
+top:0;
+left:0;
 width:110%;
 height:110%;
-background:url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da") center/cover;
-filter:blur(8px) brightness(0.45);
+background:url("https://images.unsplash.com/photo-1512820790803-83ca734da794") center/cover;
+filter:blur(6px) brightness(0.9);
 z-index:-1;
-animation:zoom 20s infinite alternate;
+animation:zoom 25s infinite alternate;
 }
 
 @keyframes zoom{
 from{transform:scale(1);}
-to{transform:scale(1.1);}
+to{transform:scale(1.08);}
 }
 
 .text{
@@ -50,9 +52,9 @@ max-width:700px;
 font-size:28px;
 line-height:1.8;
 opacity:0;
-transform:translateY(40px);
-transition:all 1.5s ease;
-margin-bottom:40px;
+transform:translateY(30px);
+transition:all 1.2s;
+margin-bottom:30px;
 }
 
 .text.show{
@@ -60,75 +62,65 @@ opacity:1;
 transform:translateY(0);
 }
 
-.small{
-font-size:18px;
-opacity:0.8;
-margin-bottom:20px;
-letter-spacing:2px;
-}
-
 .big{
 font-size:38px;
 font-weight:700;
-margin:20px 0;
 }
 
 .quote{
-font-size:22px;
 font-style:italic;
-opacity:0.9;
+font-size:22px;
 }
 
 .title{
-font-size:46px;
-font-weight:700;
+font-size:44px;
 letter-spacing:6px;
-margin-top:20px;
+margin-top:10px;
 }
 
-.author{
-font-size:16px;
-opacity:0.7;
-margin-top:10px;
+.book{
+margin-top:20px;
+opacity:0;
+transform:scale(.8);
+transition:all 1.6s;
+}
+
+.book.show{
+opacity:1;
+transform:scale(1);
+}
+
+.book img{
+width:220px;
+border-radius:6px;
+box-shadow:0 25px 60px rgba(0,0,0,0.25);
 }
 
 /* ボタン */
 
 .button{
+margin-top:30px;
 padding:14px 28px;
-background:white;
-color:black;
-font-size:16px;
+background:#111;
+color:white;
 border-radius:40px;
 text-decoration:none;
 font-weight:700;
 letter-spacing:1px;
-transition:all .3s;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
+transition:.3s;
 }
 
 .button:hover{
 transform:scale(1.05);
-background:#f5f5f5;
+background:#333;
 }
 
 @media(max-width:600px){
 
-.text{
-font-size:20px;
-}
-
-.big{
-font-size:28px;
-}
-
-.quote{
-font-size:18px;
-}
-
-.title{
-font-size:34px;
-}
+.text{font-size:20px;}
+.big{font-size:28px;}
+.title{font-size:30px;}
+.book img{width:160px;}
 
 }
 
@@ -143,6 +135,12 @@ font-size:34px;
 
 <div id="text" class="text"></div>
 
+<div id="book" class="book">
+<img src="https://m.media-amazon.com/images/I/615m1SL9wIL._SL1428_.jpg">
+<div class="title">うたうおばけ</div>
+<div>くどうれいん</div>
+</div>
+
 <a class="button" href="https://あなたのNotion記事URL" target="_blank">
 感想記事を読む
 </a>
@@ -153,67 +151,60 @@ font-size:34px;
 
 const scenes=[
 
-`<div class="small">ある日常エッセイ</div>
-<div class="big">こんなに笑ったのは、初めてかもしれない。</div>`,
+`<div class="big">こんなに笑ったエッセイ、初めてかもしれない。</div>`,
 
-`日常は、退屈なものだと思っていた。<br><br>
-でも、くどうれいんの手にかかると<br>
-それは突然、舞台のように輝き出す。`,
+`日常は、退屈だと思っていた。<br><br>
+でもある人の視点を通すと<br>
+それは突然、舞台になる。`,
 
 `<div class="quote">
-彼氏との別れ話の場所として連れて行かれたのはなぜか九段下だった。<br><br>
 TPOがおしまい、TPOよ、ああ、TPO
 </div>`,
 
-`登場するのは<br><br>
-友人<br>
-家族<br>
-街で出会った人たち`,
+`TPOおしまい男。`,
 
-`でも彼らは、なぜか<br><br>
-とんでもなく面白い。`,
+`底抜けにタフなハシノ。`,
 
-`<div class="big">TPOおしまい男</div>`,
-
-`<div class="big">底抜けにタフ（アホ）なハシノ</div>`,
-
-`くどうれいんの<br>
-鋭い観察力と<br>
-言葉のセンスが<br><br>
-日常をコメディに変えていく。`,
+`くどうれいんの言葉は<br><br>
+日常を、コメディに変える。`,
 
 `<div class="big">人って、やっぱりおもしろい。</div>`,
 
-`<div class="title">うたうおばけ</div>
-<div class="author">くどうれいん</div>`
+`<div class="big">うたうおばけ</div>`
 
-];
+]
 
-let index=0;
-const text=document.getElementById("text");
+let index=0
+const text=document.getElementById("text")
+const book=document.getElementById("book")
 
 function showScene(){
 
-text.classList.remove("show");
+text.classList.remove("show")
 
 setTimeout(()=>{
 
-text.innerHTML=scenes[index];
-text.classList.add("show");
+text.innerHTML=scenes[index]
+text.classList.add("show")
 
-index++;
+if(index==scenes.length-1){
+book.classList.add("show")
+}
+
+index++
 
 if(index>=scenes.length){
-index=0;
+index=0
+book.classList.remove("show")
 }
 
-},800);
+},600)
 
 }
 
-showScene();
+showScene()
 
-setInterval(showScene,4500);
+setInterval(showScene,4200)
 
 </script>
 
