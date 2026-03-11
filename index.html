@@ -4,57 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-font-family:'Noto Serif JP',serif;
+font-family:'Zen Kaku Gothic New',sans-serif;
+background:#fafafa;
 overflow:hidden;
-background:#f5efe6;
 }
 
 .container{
+position:relative;
 height:100vh;
-width:100vw;
 display:flex;
-flex-direction:column;
 align-items:center;
 justify-content:center;
 text-align:center;
-padding:40px;
-box-sizing:border-box;
-position:relative;
+padding:30px;
 }
 
 /* 背景 */
 
 .bg{
 position:absolute;
-top:0;
-left:0;
 width:110%;
 height:110%;
-background:url("https://images.unsplash.com/photo-1512820790803-83ca734da794") center/cover;
-filter:blur(6px) brightness(0.9);
+background:url("https://images.unsplash.com/photo-1495446815901-a7297e633e8d") center/cover;
+filter:blur(10px) brightness(1.05);
 z-index:-1;
 animation:zoom 25s infinite alternate;
 }
 
 @keyframes zoom{
 from{transform:scale(1);}
-to{transform:scale(1.08);}
+to{transform:scale(1.1);}
 }
 
+/* SNSカード */
+
+.card{
+
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(20px);
+padding:40px;
+border-radius:20px;
+max-width:520px;
+box-shadow:0 20px 60px rgba(0,0,0,0.15);
+
+}
+
+/* テキスト */
+
 .text{
-max-width:700px;
 font-size:28px;
-line-height:1.8;
+line-height:1.7;
 opacity:0;
-transform:translateY(30px);
-transition:all 1.2s;
-margin-bottom:30px;
+transform:translateY(20px);
+transition:all 1s;
 }
 
 .text.show{
@@ -63,7 +71,7 @@ transform:translateY(0);
 }
 
 .big{
-font-size:38px;
+font-size:34px;
 font-weight:700;
 }
 
@@ -72,17 +80,13 @@ font-style:italic;
 font-size:22px;
 }
 
-.title{
-font-size:44px;
-letter-spacing:6px;
-margin-top:10px;
-}
+/* 書影 */
 
 .book{
-margin-top:20px;
+margin-top:25px;
 opacity:0;
-transform:scale(.8);
-transition:all 1.6s;
+transform:scale(.85);
+transition:all 1.5s;
 }
 
 .book.show{
@@ -91,23 +95,39 @@ transform:scale(1);
 }
 
 .book img{
-width:220px;
-border-radius:6px;
-box-shadow:0 25px 60px rgba(0,0,0,0.25);
+width:180px;
+border-radius:8px;
+box-shadow:0 20px 50px rgba(0,0,0,0.25);
+}
+
+/* タイトル */
+
+.title{
+margin-top:12px;
+font-weight:700;
+font-size:24px;
+}
+
+.author{
+font-size:15px;
+opacity:.7;
 }
 
 /* ボタン */
 
 .button{
-margin-top:30px;
-padding:14px 28px;
-background:#111;
+
+display:inline-block;
+margin-top:20px;
+padding:12px 24px;
+border-radius:30px;
+background:black;
 color:white;
-border-radius:40px;
 text-decoration:none;
+font-size:14px;
 font-weight:700;
-letter-spacing:1px;
 transition:.3s;
+
 }
 
 .button:hover{
@@ -117,10 +137,8 @@ background:#333;
 
 @media(max-width:600px){
 
-.text{font-size:20px;}
-.big{font-size:28px;}
-.title{font-size:30px;}
-.book img{width:160px;}
+.text{font-size:22px}
+.big{font-size:26px}
 
 }
 
@@ -133,17 +151,23 @@ background:#333;
 
 <div class="bg"></div>
 
+<div class="card">
+
 <div id="text" class="text"></div>
 
 <div id="book" class="book">
 <img src="https://m.media-amazon.com/images/I/615m1SL9wIL._SL1428_.jpg">
+
 <div class="title">うたうおばけ</div>
-<div>くどうれいん</div>
-</div>
+<div class="author">くどうれいん</div>
 
 <a class="button" href="https://あなたのNotion記事URL" target="_blank">
 感想記事を読む
 </a>
+
+</div>
+
+</div>
 
 </div>
 
@@ -153,7 +177,7 @@ const scenes=[
 
 `<div class="big">こんなに笑ったエッセイ、初めてかもしれない。</div>`,
 
-`日常は、退屈だと思っていた。<br><br>
+`日常は退屈だと思っていた。<br><br>
 でもある人の視点を通すと<br>
 それは突然、舞台になる。`,
 
@@ -166,11 +190,9 @@ TPOがおしまい、TPOよ、ああ、TPO
 `底抜けにタフなハシノ。`,
 
 `くどうれいんの言葉は<br><br>
-日常を、コメディに変える。`,
+日常をコメディに変える。`,
 
-`<div class="big">人って、やっぱりおもしろい。</div>`,
-
-`<div class="big">うたうおばけ</div>`
+`<div class="big">人って、やっぱりおもしろい。</div>`
 
 ]
 
@@ -187,24 +209,30 @@ setTimeout(()=>{
 text.innerHTML=scenes[index]
 text.classList.add("show")
 
-if(index==scenes.length-1){
-book.classList.add("show")
-}
-
 index++
 
 if(index>=scenes.length){
+
+book.classList.add("show")
+
+}else{
+
+book.classList.remove("show")
+
+}
+
+if(index>scenes.length){
 index=0
 book.classList.remove("show")
 }
 
-},600)
+},400)
 
 }
 
 showScene()
 
-setInterval(showScene,4200)
+setInterval(showScene,3500)
 
 </script>
 
