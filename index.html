@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>うたうおばけ</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
 
@@ -10,22 +14,20 @@
 
 body{
 margin:0;
-background:transparent;
+background:#f4f4f4;
 font-family:'Zen Kaku Gothic New',sans-serif;
 display:flex;
 justify-content:center;
 align-items:center;
+height:100vh;
 }
 
-/* リールカード */
-
 .card{
-
 width:320px;
 height:480px;
 background:white;
 border-radius:18px;
-box-shadow:0 10px 30px rgba(0,0,0,0.12);
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -33,19 +35,33 @@ align-items:center;
 text-align:center;
 padding:30px;
 box-sizing:border-box;
-
+position:relative;
 }
 
-/* テキスト */
+.dots{
+position:absolute;
+top:14px;
+display:flex;
+gap:6px;
+}
+
+.dot{
+width:8px;
+height:8px;
+border-radius:50%;
+background:#ddd;
+}
+
+.dot.active{
+background:black;
+}
 
 .text{
-
 font-size:20px;
 line-height:1.6;
 opacity:0;
 transform:translateY(10px);
-transition:.8s;
-
+transition:.7s;
 }
 
 .text.show{
@@ -59,26 +75,20 @@ font-weight:700;
 }
 
 .quote{
-font-style:italic;
 font-size:18px;
+font-style:italic;
 }
 
-/* 書影 */
-
 .book{
-
 display:none;
 flex-direction:column;
 align-items:center;
-
 }
 
 .book img{
-
-width:140px;
+width:150px;
 border-radius:6px;
-box-shadow:0 12px 30px rgba(0,0,0,0.2);
-
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
 .title{
@@ -91,10 +101,7 @@ font-size:13px;
 opacity:.6;
 }
 
-/* ボタン */
-
 .button{
-
 margin-top:12px;
 padding:10px 18px;
 border-radius:20px;
@@ -103,28 +110,52 @@ color:white;
 text-decoration:none;
 font-size:13px;
 font-weight:700;
+}
 
+.replay{
+margin-top:10px;
+font-size:13px;
+cursor:pointer;
+opacity:.7;
+}
+
+.replay:hover{
+opacity:1;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="card">
 
+<div class="dots" id="dots"></div>
+
 <div id="text" class="text"></div>
 
 <div id="book" class="book">
 
-<img src="https://m.media-amazon.com/images/I/615m1SL9wIL._SL1428_.jpg">
+<img src="https://images-na.ssl-images-amazon.com/images/P/4065328772.jpg">
 
 <div class="title">うたうおばけ</div>
-<div class="author">くどうれいん</div>
 
-<a class="button" href="https://aged-trouser-c00.notion.site/305f89d90a6380b48cc0d354d6b04ae3" target="_blank">
+<div class="author">くどう れいん</div>
+
+<a class="button"
+href="https://aged-trouser-c00.notion.site/305f89d90a6380b48cc0d354d6b04ae3"
+target="_blank">
+
 感想記事を読む
+
 </a>
+
+<div class="replay" onclick="restartReel()">
+
+▶ もう一度見る
+
+</div>
 
 </div>
 
@@ -134,23 +165,42 @@ font-weight:700;
 
 const scenes=[
 
-`<div class="big">こんなに笑った<br>エッセイ初めて</div>`,
-
-`日常は<br>退屈だと思っていた`,
-
-`<div class="quote">嘘みたいな本当の話</div>`,
-
-`TPOがおしまいの男`,
-
-`底抜けにタフ（アホ）な<br>ハシノ`,
-
-`<div class="big">人って<br>やっぱりおもしろい</div>`
+`<div class="big">こんなに笑った<br>エッセイは初めて</div>`,
+`ウソみたいな本当の話`,
+`<div class="quote">「なんでこいつは女と<br>別れると分かっている日に<br>薄紫の丸眼鏡のサングラスを<br>つけることができるのだろう」</div>`,
+`<div class="quote">「TPOがおしまい、<br>TPOよ、ああ、TPO」<br><br>本著からの引用</div>`,
+`<div class="quote">「アホというのは<br>タフのことで、<br>この青年は底抜けにタフなのだろう」</div>`,
+`<div class="big">人間って<br>おもしろい</div>`
 
 ]
 
 let index=0
+
 const text=document.getElementById("text")
 const book=document.getElementById("book")
+const dotsContainer=document.getElementById("dots")
+
+let interval
+
+scenes.forEach(()=>{
+
+const dot=document.createElement("div")
+dot.classList.add("dot")
+dotsContainer.appendChild(dot)
+
+})
+
+const dots=document.querySelectorAll(".dot")
+
+function updateDots(){
+
+dots.forEach((d,i)=>{
+
+d.classList.toggle("active",i<=index)
+
+})
+
+}
 
 function showScene(){
 
@@ -164,7 +214,10 @@ text.classList.remove("show")
 setTimeout(()=>{
 
 text.innerHTML=scenes[index]
+
 text.classList.add("show")
+
+updateDots()
 
 index++
 
@@ -175,13 +228,26 @@ index++
 text.style.display="none"
 book.style.display="flex"
 
+clearInterval(interval)
+
 }
+
+}
+
+function restartReel(){
+
+index=0
+book.style.display="none"
+
+interval=setInterval(showScene,3000)
+
+showScene()
 
 }
 
 showScene()
 
-setInterval(showScene,3000)
+interval=setInterval(showScene,3000)
 
 </script>
 
